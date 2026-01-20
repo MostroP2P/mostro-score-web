@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostro Score</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mostro Node Reputation Report</h1>
+        </header>
+
+        <section class="input-section">
+            <form id="analyze-form">
+                <div class="form-group">
+                    <label for="pubkey">Mostro Pubkey (npub or hex)</label>
+                    <input type="text" id="pubkey" name="pubkey"
+                           value="82fa8cb978b43c79b2156585bac2c011176a21d2aead6d9f7c575c005be88390"
+                           placeholder="npub1... or hex" required>
+                </div>
+                <div class="form-group">
+                    <label for="relays">Relays (comma separated)</label>
+                    <input type="text" id="relays" name="relays" value="wss://relay.mostro.network" placeholder="wss://relay.example.com">
+                </div>
+                <button type="submit" id="analyze-btn">Analyze</button>
+            </form>
+        </section>
+
+        <section id="status-section" class="status-section hidden">
+            <div id="status-message" class="status-message">
+                <span class="spinner"></span>
+                <span id="status-text">Connecting to relays...</span>
+            </div>
+        </section>
+
+        <section id="error-section" class="error-section hidden">
+            <div id="error-message" class="error-message"></div>
+        </section>
+
+        <section id="report-section" class="report-section hidden">
+            <div class="report-header">
+                <div class="node-info">
+                    <span class="label">Node:</span>
+                    <span id="node-pubkey" class="value mono"></span>
+                </div>
+            </div>
+
+            <!-- Longevity Section (4.1.1) -->
+            <div class="report-card">
+                <h2>Longevity</h2>
+                <div class="metric-row">
+                    <span class="label">First Activity:</span>
+                    <span id="first-activity" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Days Active:</span>
+                    <span id="days-active" class="value"></span>
+                </div>
+            </div>
+
+            <!-- Liveness Section (4.2.1) - PROMINENT per spec -->
+            <div class="report-card liveness-card">
+                <h2>Liveness</h2>
+                <div class="metric-row">
+                    <span class="label">Last Trade:</span>
+                    <span id="last-trade" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Days Since Last:</span>
+                    <span id="days-since-last" class="value"></span>
+                    <span id="activity-badge" class="badge"></span>
+                </div>
+            </div>
+
+            <!-- Recent Activity Section (4.2.2) -->
+            <div class="report-card">
+                <h2>Recent Activity</h2>
+                <div class="metric-row">
+                    <span class="label">Last 7 days:</span>
+                    <span id="trades-7d" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Last 30 days:</span>
+                    <span id="trades-30d" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Last 90 days:</span>
+                    <span id="trades-90d" class="value"></span>
+                </div>
+            </div>
+
+            <!-- Activity Consistency Section (4.2.3) -->
+            <div class="report-card">
+                <h2>Activity Consistency (30 days)</h2>
+                <div class="metric-row">
+                    <span class="label">Active Days:</span>
+                    <span id="active-days" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Max Inactive Gap:</span>
+                    <span id="max-gap" class="value"></span>
+                </div>
+            </div>
+
+            <!-- Cumulative Performance Section (4.1.2) -->
+            <div class="report-card">
+                <h2>Cumulative Performance</h2>
+                <div class="metric-row">
+                    <span class="label">Successful Trades:</span>
+                    <span id="successful-trades" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Total Volume:</span>
+                    <span id="total-volume" class="value"></span>
+                </div>
+            </div>
+
+            <!-- Trade Statistics Section (4.1.3) -->
+            <div id="trade-stats-card" class="report-card hidden">
+                <h2>Trade Statistics</h2>
+                <div class="metric-row">
+                    <span class="label">Min Trade:</span>
+                    <span id="min-trade" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Max Trade:</span>
+                    <span id="max-trade" class="value"></span>
+                </div>
+                <div class="metric-row">
+                    <span class="label">Mean Trade:</span>
+                    <span id="mean-trade" class="value"></span>
+                </div>
+                <div class="metric-row highlighted">
+                    <span class="label">Median Trade:</span>
+                    <span id="median-trade" class="value"></span>
+                </div>
+            </div>
+
+            <!-- Trust Score -->
+            <div class="report-card score-card">
+                <h2>Trust Score</h2>
+                <div id="trust-score" class="trust-score"></div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>
