@@ -93,4 +93,4 @@ The trust score (0-100) is computed as:
 
 ## License
 
-MIT
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
